@@ -46,4 +46,9 @@
  *  @return 截图后的图片
  */
 + (UIImage *)handleImage:(UIImage *)originalImage withSize:(CGSize)size;
+
+/*
+ *  根据色值生成图片
+ */
++(UIImage *)generateImagesBasedOnColorValues:(UIColor *)color size:(CGSize)size;
 @end

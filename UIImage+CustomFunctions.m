@@ -205,4 +205,27 @@
         return originalImage;
     }
 }
+
+/*
+ *  根据色值生成图片
+ */
++(UIImage *)generateImagesBasedOnColorValues:(UIColor *)color size:(CGSize)size
+{
+    UIImage *img = nil;
+    
+    CGRect rect = CGRectMake(0, 0, size.width, size.height);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextSetFillColorWithColor(context,
+                                   color.CGColor);
+    CGContextSetAlpha(context,1.0);
+    
+    CGContextFillRect(context, rect);
+    img = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    return img;
+}
 @end

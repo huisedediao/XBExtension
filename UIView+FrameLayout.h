@@ -7,11 +7,45 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UIView+CustomFunctions.h"
 #import "XBDefine.h"
 
 
 
 @interface UIView (FrameLayout)
+
+/**
+ 自身的高度
+ */
+-(CGFloat)xb_height;
+
+
+/**
+ 自身的宽度
+ */
+-(CGFloat)xb_width;
+
+
+/**
+ 最小的x值
+ */
+-(CGFloat)xb_left;
+
+/**
+ 最大的x值
+ */
+-(CGFloat)xb_right;
+
+/**
+ 最小的y值
+ */
+-(CGFloat)xb_top;
+
+/**
+ 最大的y值
+ */
+-(CGFloat)xb_bottom;
+
 
 
 /**
@@ -25,7 +59,17 @@
 -(CGFloat)maxYOfSubviews;
 
 
+/**
+ centerX;
+ 前提:必须设置了宽度
+ */
+-(void)xb_centerX:(CGFloat)centerX;
 
+/**
+ centerY;
+ 前提:必须设置了宽度
+ */
+-(void)xb_centerY:(CGFloat)centerY;
 
 
 /**

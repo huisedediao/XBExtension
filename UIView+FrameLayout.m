@@ -7,10 +7,55 @@
 //
 
 #import "UIView+FrameLayout.h"
-#import "UIView+CustomFunctions.h"
-#import "XBDefine.h"
 
 @implementation UIView (FrameLayout)
+
+/**
+ 自身的高度
+ */
+-(CGFloat)xb_height
+{
+    return self.bounds.size.height;
+}
+/**
+ 自身的宽度
+ */
+-(CGFloat)xb_width
+{
+    return self.bounds.size.width;
+}
+
+/**
+ 最小的x值
+ */
+-(CGFloat)xb_left
+{
+    return CGRectGetMinX(self.frame);
+}
+
+/**
+ 最大的x值
+ */
+-(CGFloat)xb_right
+{
+    return CGRectGetMaxX(self.frame);
+}
+
+/**
+ 最小的y值
+ */
+-(CGFloat)xb_top
+{
+    return CGRectGetMinY(self.frame);
+}
+
+/**
+ 最大的y值
+ */
+-(CGFloat)xb_bottom
+{
+    return CGRectGetMaxY(self.frame);
+}
 
 /**
  所有subView中,最大的maxX
@@ -870,6 +915,30 @@
         self.center=tempPoint;
     }
 }
+
+/**
+ centerX;
+ 前提:必须设置了宽度
+ */
+-(void)xb_centerX:(CGFloat)centerX
+{
+    CGFloat w=self.bounds.size.width/2;
+    CGFloat selfCentenX=self.frame.origin.x+w;
+    CGFloat space=centerX-selfCentenX;
+    [self xb_left:CGRectGetMinX(self.frame)+space];
+}
+/**
+ centerY;
+ 前提:必须设置了宽度
+ */
+-(void)xb_centerY:(CGFloat)centerY
+{
+    CGFloat h=self.bounds.size.height/2;
+    CGFloat selfCentenY=self.frame.origin.y+h;
+    CGFloat space=centerY-selfCentenY;
+    [self xb_top:CGRectGetMinY(self.frame)+space];
+}
+
 
 
 /**

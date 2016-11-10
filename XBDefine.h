@@ -33,6 +33,7 @@ typedef enum
 
 /********************打印方法********************/
 
+
 /****不打印当前所在方法****/
 #ifdef DEBUG //处于调试阶段,打印
 #define NSLog(...) NSLog(__VA_ARGS__)
@@ -41,13 +42,19 @@ typedef enum
 #endif
 /****不打印当前所在方法****/
 
+
 /****打印当前所在方法****/
 #ifdef DEBUG //处于调试阶段,打印
-#define XBFlog(...) NSLog(@"\n%s\n %@\n\n",__func__,[NSString stringWithFormat:__VA_ARGS__])
+#define XBFlog(...) NSLog(@"\r\r打印输出:\r\r函数：%s\r\n行数：%zd \r\r%@\n\n\r\r\r\r",__func__, __LINE__,[NSString stringWithFormat:__VA_ARGS__])
 #else   //发布阶段,不打印
 #define XBFlog(...)
 #endif
 /****打印当前所在方法****/
+
+/****手动break****/
+#define XBBreak(...) {OCDebugLog(__VA_ARGS__); assert(0);}
+/****手动break****/
+
 
 /********************打印方法********************/
 
@@ -65,11 +72,15 @@ typedef enum
 //是否是空对象
 #define ObjectIsEmpty(_object) (_object == nil \|| [_object isKindOfClass:[NSNull class]] \|| ([_object respondsToSelector:@selector(length)] && [(NSData *)_object length] == 0) \|| ([_object respondsToSelector:@selector(count)] && [(NSArray *)_object count] == 0))
 
-
+//UserDefault
 #define UserDefault [NSUserDefaults standardUserDefaults]
+//Application
 #define Application        [UIApplication sharedApplication]
+//KeyWindow
 #define KeyWindow          [UIApplication sharedApplication].keyWindow
+//CurrentAppDelegate
 #define CurrentAppDelegate        [UIApplication sharedApplication].delegate
+//FileManager
 #define FileManager  [NSFileManager defaultManager]
 
 //屏幕宽高
@@ -136,8 +147,16 @@ typedef enum
 //block weak属性化self宏
 #define WEAK_SELF __typeof(self) __weak weakSelf = self;
 
-#define UseCanTouch   [[[UIApplication sharedApplication] keyWindow] setUserInteractionEnabled:YES];
-#define UseNoCanTouch [[[UIApplication sharedApplication] keyWindow] setUserInteractionEnabled:NO];
+//获得某个对象的弱指针
+#define WEAK_(obj) __typeof(obj) __weak weakObj = obj;
+
+//获得某个对象的强指针
+#define STRONG_(obj) __typeof(obj) __strong strongObj = obj;
+
+//可以操作
+#define UserCanTouch   [[[UIApplication sharedApplication] keyWindow] setUserInteractionEnabled:YES];
+//不可以操作
+#define UserCanNotTouch [[[UIApplication sharedApplication] keyWindow] setUserInteractionEnabled:NO];
 
 //获取沙盒Document路径
 #define DocumentPath [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject]
@@ -157,6 +176,50 @@ typedef enum
 
 /**********************************宏**********************************/
 
+/**********************************常用方法(小括号中为返回值)**********************************/
 
+//根据传入的文字、宽度和字体计算出合适的size (CGSize)
+#define getAdjustSizeWith_text_width_font(text,width,font) ({[text boundingRectWithSize:CGSizeMake(width, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName :font} context:NULL].size;})
+
+//根据传入的文字和字体获取宽度 (CGFloat)
+#define getWidthWith_title_font(title,font) ({\
+UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 1000, 0)];\
+label.text = title;\
+label.font = font;\
+[label sizeToFit];\
+label.frame.size.width;\
+})
+
+//判断某个路径是否存在 (BOOL)
+#define isExistFileAtPath(path) [[NSFileManager defaultManager] fileExistsAtPath:path]
+
+//获取当前时间戳 (NSTimeInterval)
+#define getCurrentTimeInterval ({ \
+NSDate* data = [NSDate dateWithTimeIntervalSinceNow:0];\
+NSTimeInterval a=[data timeIntervalSince1970]; \
+a;})
+
+//移除字符串中的空格
+//把strNeedChange中的currentStr替换成repalceStr (NSString)
+#define replaceString_currentStr_To_repalceStr_For_strNeedChange(currentStr,repalceStr,strNeedChange)\
+[strNeedChange stringByReplacingOccurrencesOfString:currentStr withString:repalceStr]
+
+//判断某个view是否是另一个view的子view (BOOL)
+#define isSubViewOfView_subV_fatherV(subV,fatherV)\
+({\
+BOOL isSubView=NO;\
+NSArray *subViews=fatherV.subviews;\
+for (UIView *subView in subViews)\
+{\
+if (subView==subV)\
+{\
+isSubView=YES;\
+break;\
+}\
+}\
+isSubView;\
+})
+
+/**********************************常用方法**********************************/
 
 #endif /* XBDefine_h */

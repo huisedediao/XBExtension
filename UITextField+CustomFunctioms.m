@@ -73,7 +73,10 @@
     NSMutableDictionary *textParams=[NSMutableDictionary new];
     textParams[NSForegroundColorAttributeName]=placeHolderColor;
     textParams[NSFontAttributeName]=placeHolderFont;
-    [placeHolder drawAtPoint:CGPointMake(placeholderSpaceToLeft, (tf.frame.size.height-20)*0.5) withAttributes:textParams];
+    
+    CGSize size=[placeHolder boundingRectWithSize:CGSizeMake((tf.bounds.size.width-placeholderSpaceToLeft-5), CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName :placeHolderFont} context:NULL].size;
+    [placeHolder drawInRect:CGRectMake(placeholderSpaceToLeft, (tf.frame.size.height-size.height)*0.5, size.width, size.height) withAttributes:textParams];
+    
     UIImage *image=UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return image;

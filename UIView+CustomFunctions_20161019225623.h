@@ -35,11 +35,4 @@
  **/
 - (void)drawDashLineLineLength:(int)lineLength lineSpacing:(int)lineSpacing lineColor:(UIColor *)lineColor;
 
-
-/*
- *  添加模糊效果
- *  参数1：模糊程度
- *  参数2：黑色还是白色，默认黑；1：黑，2：白
- */
--(void)addBlurwithNumber:(CGFloat)blur type:(NSInteger)type;
 @end

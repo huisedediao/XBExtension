@@ -79,19 +79,4 @@
     [self.layer addSublayer:shapeLayer];
 }
 
-
-/*
- *  添加模糊效果
- *  参数1：图片
- *  参数2：模糊程度
- *  参数3：黑色还是白色，默认黑；0：黑，1：白
- */
--(void)addBlurwithNumber:(CGFloat)blur type:(NSInteger)type
-{
-    [self layoutIfNeeded];
-    UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:self.bounds];
-    toolbar.barStyle = type==0?UIBarStyleBlackTranslucent:UIBarStyleDefault;
-    toolbar.alpha=blur;
-    [self addSubview:toolbar];
-}
 @end

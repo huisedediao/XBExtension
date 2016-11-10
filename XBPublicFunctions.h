@@ -104,7 +104,7 @@ typedef void (^asyncDownloadImgFailureBlock) (NSError *_Nullable error);
 /**
  *  获取当前时间戳
  */
-+(NSTimeInterval)getCurrentTimeInterval;
+//+(NSTimeInterval)getCurrentTimeInterval;
 
 /**
  *  时间戳转换成时间字符串

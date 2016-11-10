@@ -46,6 +46,43 @@
     }
 }
 
+/**
+ *  图片在上，文字在下布局
+ *  参数1：图片在竖直方向上所占的比例
+ *  参数2：图片顶部离button顶部的距离
+ *  参数3：文字在竖直方向上的偏移，+往下，-往上，用于调整图片和文字的间距
+ */
+-(void)imageTopAndTitleBottomWithImageHScale:(CGFloat)imageHScale topSpace:(CGFloat)topSpace vOffsetOfText:(CGFloat)vOffsetOfText
+{
+    [self layoutIfNeeded];
+    
+    CGFloat selfH=self.bounds.size.height;
+    CGFloat selfW=self.bounds.size.width;
+    
+    UIImage *image=self.imageView.image;
+    CGFloat imageH=image.size.height;
+    CGFloat imageW=image.size.width;
+    CGFloat titleLEdge=-imageW;
+    
+    CGFloat imageHWScale=imageH/imageW;
+    CGFloat titleTopEdge=selfH*imageHScale;
+    
+    CGFloat imageBottomEdge=selfH*(1-imageHScale);
+    CGFloat imageWAfterScale=titleTopEdge/imageHWScale;
+    CGFloat imageLeftEdge=(selfW-imageWAfterScale)*0.5;
+    
+    
+    self.titleEdgeInsets=UIEdgeInsetsMake(titleTopEdge+topSpace+vOffsetOfText*2, titleLEdge, 0, 0);
+    if (titleTopEdge >= imageH)
+    {
+        self.imageEdgeInsets=UIEdgeInsetsMake(topSpace,(selfW-imageW)*0.5, imageBottomEdge-topSpace, (selfW-imageW)*0.5);
+    }
+    else
+    {
+        self.imageEdgeInsets=UIEdgeInsetsMake(topSpace, imageLeftEdge, imageBottomEdge-topSpace, imageLeftEdge);
+    }
+}
+
 
 /**
  *  图片文字同一水平线上布局
@@ -155,5 +192,21 @@
             self.titleEdgeInsets=UIEdgeInsetsMake(0, titleLeftEdge-sideSpace, 0, 0);
         }
     }
+}
+
+- (void)verticalImageAndTitle:(CGFloat)spacing
+{
+//    self.titleLabel.backgroundColor = [UIColor greenColor];
+    CGSize imageSize = self.imageView.frame.size;
+    CGSize titleSize = self.titleLabel.frame.size;
+    CGSize textSize = [self.titleLabel.text sizeWithFont:self.titleLabel.font];
+    CGSize frameSize = CGSizeMake(ceilf(textSize.width), ceilf(textSize.height));
+    if (titleSize.width + 0.5 < frameSize.width) {
+        titleSize.width = frameSize.width;
+    }
+    CGFloat totalHeight = (imageSize.height + titleSize.height + spacing);
+    self.imageEdgeInsets = UIEdgeInsetsMake(- (totalHeight - imageSize.height), 0.0, 0.0, - titleSize.width);
+    self.titleEdgeInsets = UIEdgeInsetsMake(0, - imageSize.width, - (totalHeight - titleSize.height), 0);
+    
 }
 @end

@@ -62,8 +62,7 @@
     
     size.height = rect.size.height;
     
-    UIGraphicsBeginImageContextWithOptions(size, NO , 0.0f);// 高清，效率比较慢
-    //    UIGraphicsBeginImageContext(size);// 不要求高清可以使用这个
+    UIGraphicsBeginImageContext(size);
     
     CGContextRef context = UIGraphicsGetCurrentContext();
     
@@ -229,6 +228,4 @@
     
     return img;
 }
-
-
 @end

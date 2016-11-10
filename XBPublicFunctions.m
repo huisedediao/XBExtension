@@ -136,7 +136,7 @@
             }
         }
     }];
-
+    
 }
 
 
@@ -195,13 +195,13 @@
 /**
  *  获取当前时间戳
  */
-+(NSTimeInterval)getCurrentTimeInterval
-{
-    //获取当前系统时间戳
-    NSDate* data = [NSDate dateWithTimeIntervalSinceNow:0];
-    NSTimeInterval a=[data timeIntervalSince1970];  //  *1000 是精确到毫秒，不乘就是精确到秒
-    return a;
-}
+//+(NSTimeInterval)getCurrentTimeInterval
+//{
+//    //获取当前系统时间戳
+//    NSDate* data = [NSDate dateWithTimeIntervalSinceNow:0];
+//    NSTimeInterval a=[data timeIntervalSince1970];  //  *1000 是精确到毫秒，不乘就是精确到秒
+//    return a;
+//}
 
 /**
  *  时间戳转换成时间
@@ -422,15 +422,15 @@
     [displayView layoutIfNeeded];
     
     //获取取键盘展开后的rect
-    //    CGRect rect = [noti.userInfo[@"UIKeyboardFrameEndUserInfoKey"] CGRectValue];
+    CGRect rect = [noti.userInfo[@"UIKeyboardFrameEndUserInfoKey"] CGRectValue];
     //获取键盘的高度
-    //    CGFloat keyBoardHeight = rect.size.height;
+    CGFloat keyBoardHeight = rect.size.height;
     
     
-    CGRect beginKeyboardRect = [[noti.userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
-    CGRect endKeyboardRect = [[noti.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    
-    CGFloat keyBoardHeight=beginKeyboardRect.origin.y-endKeyboardRect.origin.y;
+    //    CGRect beginKeyboardRect = [[noti.userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
+    //    CGRect endKeyboardRect = [[noti.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    //
+    //    CGFloat keyBoardHeight=beginKeyboardRect.origin.y-endKeyboardRect.origin.y;
     
     if (keyBoardHeight<215)
     {

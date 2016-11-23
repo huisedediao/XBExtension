@@ -262,6 +262,32 @@
 }
 
 
+/**
+ * NSString转换成NSDate
+ * 参数1:NSString
+ * 参数2:参数2:日期格式
+ */
++ (NSDate *_Nullable)dateFromString:(NSString *_Nullable)dateStr dateFormatterStr:(NSString *_Nullable )dateFormatterStr
+{
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    
+    
+    //    //zzz表示时区，zzz可以删除，这样返回的日期字符将不包含时区信息。
+    //    @"yyyy-MM-dd HH:mm:ss zzz";
+    
+    if (dateFormatterStr==nil)
+    {
+        dateFormatterStr=@"yyyy-MM-dd HH:mm:ss";
+    }
+    
+    [dateFormatter setDateFormat:dateFormatterStr];
+    
+    
+    return [dateFormatter dateFromString:dateStr];
+}
+
+
 #pragma mark - keyValue相关
 /**
  * 获取对象的所有属性

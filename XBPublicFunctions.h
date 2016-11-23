@@ -122,6 +122,14 @@ typedef void (^asyncDownloadImgFailureBlock) (NSError *_Nullable error);
 + (NSString *_Nullable )stringFromDate:(NSDate *_Nullable )date dateFormatterStr:(NSString *_Nullable )dateFormatterStr;
 
 
+/**
+ * NSString转换成NSDate
+ * 参数1:NSString
+ * 参数2:参数2:日期格式
+ */
++ (NSDate *_Nullable)dateFromString:(NSString *_Nullable)dateStr dateFormatterStr:(NSString *_Nullable )dateFormatterStr;
+
+
 
 #pragma mark - keyValue相关
 /**

@@ -47,7 +47,7 @@
 }
 
 
-+(NSMutableArray *)RGBComponentsFromColor:(UIColor *)color
++(NSMutableArray *)RGBAComponentsFromColor:(UIColor *)color
 {
     CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
     unsigned char resultingPixel[4];

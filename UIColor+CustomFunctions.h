@@ -16,8 +16,8 @@
 +(UIColor *)colorWithHex: (NSString *) stringToConvert alpha:(float)opacity;
 
 /** UIColor转成rgba */
-+(NSMutableArray *)RGBComponentsFromColor:(UIColor *)color;
++(NSMutableArray *)RGBAComponentsFromColor:(UIColor *)color;
 
 /** UIColor转16进制字符串 */
-+ (NSMutableArray *) changeUIColorToRGB:(UIColor *)color;
++ (NSString *) changeUIColorToRGB:(UIColor *)color;
 @end

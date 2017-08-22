@@ -34,6 +34,16 @@ typedef enum
 /********************打印方法********************/
 
 
+
+#ifdef DEBUG
+#define LRString [NSString stringWithFormat:@"%s", __FILE__].lastPathComponent
+#define LRLog(...) printf("%s: %s 第%d行: %s\n\n",[[NSString lr_stringDate] UTF8String], [LRString UTF8String] ,__LINE__, [[NSString stringWithFormat:__VA_ARGS__] UTF8String]);
+
+#else
+#define LRLog(...)
+#endif
+
+
 /****不打印当前所在方法****/
 #ifdef DEBUG //处于调试阶段,打印
 #define NSLog(...) NSLog(__VA_ARGS__)
@@ -62,6 +72,8 @@ typedef enum
 /**********************************宏**********************************/
 //字符串是否为空
 #define StringIsEmpty(str) ([str isKindOfClass:[NSNull class]] || str == nil || [str length] < 1 ? YES : NO )
+
+
 
 //数组是否为空
 #define ArrayIsEmpty(array) (array == nil || [array isKindOfClass:[NSNull class]] || array.count == 0)
@@ -92,6 +104,14 @@ typedef enum
 
 //RGB颜色
 #define ColorRGBA(r,g,b,a) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:(a)]
+
+//Font
+#define FontL(s)             [UIFont systemFontOfSize:s weight:UIFontWeightLight]
+#define FontR(s)             [UIFont systemFontOfSize:s weight:UIFontWeightRegular]
+#define FontB(s)             [UIFont systemFontOfSize:s weight:UIFontWeightBold]
+#define FontT(s)             [UIFont systemFontOfSize:s weight:UIFontWeightThin]
+#define Font(s)              FontL(s)
+
 
 
 
@@ -136,7 +156,7 @@ typedef enum
 
 //获取一段时间间隔
 #define StartTime CFAbsoluteTime start = CFAbsoluteTimeGetCurrent();
-#define EndTime   NSLog(@"Time: %f", CFAbsoluteTimeGetCurrent() - start)
+#define EndTime   NSLog(@"\r\rTime: %f\r\r", CFAbsoluteTimeGetCurrent() - start);
 
 //设备判断
 #define iPhone4 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 960), [[UIScreen mainScreen] currentMode].size) : NO)
@@ -144,8 +164,19 @@ typedef enum
 #define iPhone6 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(750, 1334), [[UIScreen mainScreen] currentMode].size) : NO)
 #define iPhone6Plus ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1242, 2208), [[UIScreen mainScreen] currentMode].size) : NO)
 
+
+#define NOTIF_ADD(n, f)     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(f) name:n object:nil]
+#define NOTIF_POST(n, o)    [[NSNotificationCenter defaultCenter] postNotificationName:n object:o]
+#define NOTIF_REMV()        [[NSNotificationCenter defaultCenter] removeObserver:self]
+
+
+//Format
+#define FORMAT(f, ...)      [NSString stringWithFormat:f, ## __VA_ARGS__]
+
 //block weak属性化self宏
 #define WEAK_SELF __typeof(self) __weak weakSelf = self;
+
+#define StrongSelf(type)  __strong typeof(type) type = weak##type; // strong
 
 //获得某个对象的弱指针
 #define WEAK_(obj) __typeof(obj) __weak weakObj = obj;
@@ -167,12 +198,21 @@ typedef enum
 //获取沙盒Cache路径
 #define CachePath [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject]
 
+//统一收起键盘
+#define WindowEndEidting [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
+
 //判断是真机还是模拟器
 #if TARGET_OS_IPHONE//真机
 #endif
 #if TARGET_IPHONE_SIMULATOR
 //模拟器
 #endif
+
+
+/** 自定义语言包位置 */
+#define TextPath [[NSBundle mainBundle] pathForResource:@"G5_language" ofType:@"bundle"]
+#define LanguageBundle [NSBundle bundleWithPath:TextPath]
+#define CZLocalizedString(key, comment)  [LanguageBundle localizedStringForKey:key value:comment table:nil]
 
 /**********************************宏**********************************/
 
@@ -203,6 +243,32 @@ a;})
 //把strNeedChange中的currentStr替换成repalceStr (NSString)
 #define replaceString_currentStr_To_repalceStr_For_strNeedChange(currentStr,repalceStr,strNeedChange)\
 [strNeedChange stringByReplacingOccurrencesOfString:currentStr withString:repalceStr]
+
+//view设置圆角
+#define viewBorderRadius(View, Radius, Width, Color)\
+\
+[View.layer setCornerRadius:(Radius)];\
+[View.layer setMasksToBounds:YES];\
+[View.layer setBorderWidth:(Width)];\
+[View.layer setBorderColor:[Color CGColor]] // view圆角
+
+//获取 keyWindow
+#define getWindow \
+({\
+UIWindow* win = nil; \
+for (id item in [UIApplication sharedApplication].windows) \
+{\
+    if ([item class] == [UIWindow class]) \
+{\
+        if (!((UIWindow*)item).hidden)\
+        {\
+            win = item;\
+            break;\
+        }\
+    }\
+}\
+win;\
+})
 
 //判断某个view是否是另一个view的子view (BOOL)
 #define isSubViewOfView_subV_fatherV(subV,fatherV)\

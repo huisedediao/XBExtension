@@ -26,6 +26,14 @@
  */
 - (UIImage *)cuttingRect:(CGRect)rect;
 
+///获取某点的颜色
+- (UIColor *)xb_getColorForPoint:(CGPoint)point;
+
+///UIImage和base64互转
+- (NSString *)encodeToBase64String:(UIImage *)image;
+
+///UIImage和base64互转
+- (UIImage *)decodeBase64ToImage:(NSString *)strEncodeData;
 
 /**
  *  打水印

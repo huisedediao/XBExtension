@@ -24,4 +24,10 @@
  */
 +(UIImage *)whileColorHolderImgForTF:(UITextField *)tf bgImage:(UIImage *)bgImage placeHolder:(NSString *)placeHolder placeHolderColor:(UIColor *)placeHolderColor placeHolderFont:(UIFont *)placeHolderFont placeholderSpaceToLeft:(CGFloat)placeholderSpaceToLeft;
 
+
+// 修改文本展示区域，一般跟editingRectForBounds一起重写
+- (CGRect)textRectForBounds:(CGRect)bounds；
+
+// 重写来编辑区域，可以改变光标起始位置，以及光标最右到什么地方，placeHolder的位置也会改变
+-(CGRect)editingRectForBounds:(CGRect)bounds；
 @end

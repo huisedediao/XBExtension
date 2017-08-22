@@ -13,7 +13,7 @@
 /**
  判断是不是某个view的子view
  */
--(BOOL)isSubViewOfView:(UIView *)fatherView
+-(BOOL)xb_isSubViewOfView:(UIView *)fatherView
 {
     BOOL isSubView=NO;
     
@@ -36,7 +36,7 @@
 /**
  自身的高度
  */
--(CGFloat)height
+-(CGFloat)xb_height
 {
     return self.bounds.size.height;
 }
@@ -45,7 +45,7 @@
 /**
  自身的宽度
  */
--(CGFloat)width
+-(CGFloat)xb_width
 {
     return self.bounds.size.width;
 }
@@ -56,7 +56,7 @@
  ** lineSpacing:	虚线的间距
  ** lineColor:	  虚线的颜色
  **/
--(void)drawDashLineLineLength:(int)lineLength lineSpacing:(int)lineSpacing lineColor:(UIColor *)lineColor
+-(void)xb_drawDashLineLineLength:(int)lineLength lineSpacing:(int)lineSpacing lineColor:(UIColor *)lineColor
 {
     CAShapeLayer *shapeLayer = [CAShapeLayer layer];
     [shapeLayer setBounds:self.bounds];
@@ -86,12 +86,25 @@
  *  参数2：模糊程度
  *  参数3：黑色还是白色，默认黑；0：黑，1：白
  */
--(void)addBlurwithNumber:(CGFloat)blur type:(NSInteger)type
+-(void)xb_addBlurwithNumber:(CGFloat)blur type:(NSInteger)type
 {
     [self layoutIfNeeded];
     UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:self.bounds];
     toolbar.barStyle = type==0?UIBarStyleBlackTranslucent:UIBarStyleDefault;
     toolbar.alpha=blur;
     [self addSubview:toolbar];
+}
+
+
+/*
+ *  自身的截图
+ */
+- (UIImage *)xb_imageShot
+{
+    UIGraphicsBeginImageContextWithOptions(self.bounds.size, YES, 0.0);
+    [self.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return img;
 }
 @end

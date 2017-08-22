@@ -13,19 +13,19 @@
 /**
  判断是不是某个view的子view
  */
--(BOOL)isSubViewOfView:(UIView *)fatherView;
+-(BOOL)xb_isSubViewOfView:(UIView *)fatherView;
 
 
 /**
  自身的高度
  */
--(CGFloat)height;
+-(CGFloat)xb_height;
 
 
 /**
  自身的宽度
  */
--(CGFloat)width;
+-(CGFloat)xb_width;
 
 
 /**
@@ -33,7 +33,7 @@
  ** lineSpacing:	虚线的间距
  ** lineColor:	  虚线的颜色
  **/
-- (void)drawDashLineLineLength:(int)lineLength lineSpacing:(int)lineSpacing lineColor:(UIColor *)lineColor;
+- (void)xb_drawDashLineLineLength:(int)lineLength lineSpacing:(int)lineSpacing lineColor:(UIColor *)lineColor;
 
 
 /*
@@ -41,5 +41,11 @@
  *  参数1：模糊程度
  *  参数2：黑色还是白色，默认黑；1：黑，2：白
  */
--(void)addBlurwithNumber:(CGFloat)blur type:(NSInteger)type;
+-(void)xb_addBlurwithNumber:(CGFloat)blur type:(NSInteger)type;
+
+
+/*
+ *  自身的截图
+ */
+- (UIImage *)xb_imageShot;
 @end

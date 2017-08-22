@@ -7,7 +7,8 @@
 //
 
 #import "UIViewController+CustomFunctions.h"
-#import <objc/runtime.h>
+//#import <objc/runtime.h>
+#import <objc/message.h>
 
 #ifdef DEBUG //处于调试阶段,打印
 #define NSLog(...) NSLog(__VA_ARGS__)
@@ -30,9 +31,20 @@
     
     //两方法进行交换
     method_exchangeImplementations(viewWillAppear, logViewWillAppear);
-    
+
+    //检查是否销毁
+    Method dealloc=class_getInstanceMethod(self, sel_registerName("dealloc"));
+    Method logDealloc=class_getInstanceMethod(self, @selector(logDealloc));
+    method_exchangeImplementations(dealloc, logDealloc);
 #endif
     
+}
+-(void)logDealloc
+{
+    NSString *className = NSStringFromClass([self class]);
+    NSLog(@"----------------->>>销毁%@ 销毁\n\n\n",className);
+    
+    [self logDealloc];
 }
 
 - (void)logViewWillAppear:(BOOL)animated {
@@ -41,7 +53,7 @@
     
     //在这里，你可以进行过滤操作，指定哪些viewController需要打印，哪些不需要打印
     if ([className hasPrefix:@"UI"] == NO) {
-        NSLog(@"\r\r\r\r\r\r\r\r\r\r--------------------------------------->>>%@\n\n\n",className);
+        NSLog(@"----------------->>>显示%@ 显示\n\n\n",className);
     }
     //下面方法的调用，其实是调用viewWillAppear
     [self logViewWillAppear:animated];

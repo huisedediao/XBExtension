@@ -10,6 +10,36 @@
 
 @implementation NSString (CustomFunctions)
 
+///根据传入的宽度和字体计算出合适的size (CGSize)
+- (CGSize)xb_getAdjustSizeWithWidth:(CGFloat)width font:(UIFont *)font
+{
+    return [self boundingRectWithSize:CGSizeMake(width, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName :font} context:NULL].size;
+}
+
+
+///根据传入的字体获取宽度 (CGFloat)
+- (CGFloat)xb_getWidthWithFont:(UIFont *)font
+{
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 1000, 0)];
+    label.text = self;
+    label.font = font;
+    [label sizeToFit];
+    return label.frame.size.width;
+}
+
+///身份证号验证
+- (BOOL)xb_isValidateIdentityCard
+{
+    BOOL flag;
+    if (self.length <= 0) {
+        flag = NO;
+        return flag;
+    }
+    NSString *regex2 = @"^(\\d{14}|\\d{17})(\\d|[xX])$";
+    NSPredicate *identityCardPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex2];
+    return [identityCardPredicate evaluateWithObject:self];
+}
+
 //判断是否为整形：
 - (BOOL)isPureInt
 {
@@ -66,6 +96,28 @@
 -(NSString *)removeEmptyStr
 {
     return [self stringByReplacingOccurrencesOfString:@" " withString:@""];
+}
+
+///是否有空格
+- (BOOL)xb_isBlank
+{
+    NSRange _range = [self rangeOfString:@" "];
+    if (_range.location != NSNotFound) {
+        //有空格
+        return YES;
+    } else {
+        //没有空格
+        return NO;
+    }
+}
+
+///移除字符串中的空格和换行符
+- (NSString *)xb_removeSpaceAndNewline
+{
+    NSString *temp = [self stringByReplacingOccurrencesOfString:@" " withString:@""];
+    temp = [temp stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+    temp = [temp stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    return temp;
 }
 
 /**
@@ -141,5 +193,76 @@
     NSData *JSONData = [JSONString dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:JSONData options:NSJSONReadingMutableLeaves error:nil];
     return responseJSON;
+}
+
+
+///从url中拿到链接字符串
++ (NSString *)xb_getStringFromUrl:(NSURL *)myURL
+{
+    NSString *urlString = myURL.absoluteString;
+    return urlString;
+}
+
+//判断密码强度
+- (XBPwdStrength) judgePasswordStrength
+{
+    NSMutableArray* resultArray = [[NSMutableArray alloc] init];
+    
+    NSArray* termArray1 = [[NSArray alloc] initWithObjects:@"a", @"b", @"c", @"d", @"e", @"f", @"g", @"h", @"i", @"j", @"k", @"l", @"m", @"n", @"o", @"p", @"q", @"r", @"s", @"t", @"u", @"v", @"w", @"x", @"y", @"z", nil];
+    NSArray* termArray2 = [[NSArray alloc] initWithObjects:@"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"0", nil];
+    NSArray* termArray3 = [[NSArray alloc] initWithObjects:@"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil];
+    NSArray* termArray4 = [[NSArray alloc] initWithObjects:@"~",@"`",@"@",@"#",@"$",@"%",@"^",@"&",@"*",@"(",@")",@"-",@"_",@"+",@"=",@"{",@"}",@"[",@"]",@"|",@":",@";",@"“",@"'",@"‘",@"<",@",",@".",@">",@"?",@"/",@"、",@"!", nil];
+    
+    NSString* result1 = [NSString stringWithFormat:@"%d",[self judgeRange:termArray1 Password:self]];
+    NSString* result2 = [NSString stringWithFormat:@"%d",[self judgeRange:termArray2 Password:self]];
+    NSString* result3 = [NSString stringWithFormat:@"%d",[self judgeRange:termArray3 Password:self]];
+    NSString* result4 = [NSString stringWithFormat:@"%d",[self judgeRange:termArray4 Password:self]];
+    
+    [resultArray addObject:[NSString stringWithFormat:@"%@",result1]];
+    [resultArray addObject:[NSString stringWithFormat:@"%@",result2]];
+    [resultArray addObject:[NSString stringWithFormat:@"%@",result3]];
+    [resultArray addObject:[NSString stringWithFormat:@"%@",result4]];
+    
+    int intResult=0;
+    for (int j=0; j<[resultArray count]; j++)
+    {
+        if ([[resultArray objectAtIndex:j] isEqualToString:@"1"])
+        {
+            intResult++;
+        }
+    }
+    XBPwdStrength result;
+    if (intResult <2 || self.length<6)
+    {
+        result = XBPwdStrengthNon;
+    }
+    else if (intResult == 2 && [self length]<12)
+    {
+        result = XBPwdStrengthWeak;
+    }
+    else if ((intResult == 2 && [self length] >= 12) || (intResult >2 && self.length<12))
+    {
+        result = XBPwdStrengthMedium;
+    }
+    else if((intResult ==3 && self.length>=12) || intResult == 4)
+    {
+        result = XBPwdStrengthStrong;
+    }
+    return result;
+}
+//判断是否包含
+- (BOOL) judgeRange:(NSArray*) _termArray Password:(NSString*) _password
+{
+    NSRange range;
+    BOOL result =NO;
+    for(int i=0; i<[_termArray count]; i++)
+    {
+        range = [_password rangeOfString:[_termArray objectAtIndex:i]];
+        if(range.location != NSNotFound)
+        {
+            result =YES;
+        }
+    }
+    return result;
 }
 @end

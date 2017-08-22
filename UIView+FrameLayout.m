@@ -12,7 +12,7 @@
 /**
  根据传入的size和rect，算出这个size要处于rect的中央所需要的rect
  */
-+(CGRect)getRectOfSize:(CGSize)size sameCenterWithRect:(CGRect)rect
++(CGRect)xb_getRectOfSize:(CGSize)size sameCenterWithRect:(CGRect)rect
 {
     CGRect resultRect;
     resultRect.origin.x=(rect.size.width-size.width)*0.5;
@@ -1165,7 +1165,7 @@
  addOriginX:原来x上添加的量
  addOriginY:原来Y上添加的量
  */
--(void)xb_updateOriginAddOriginX:(CGFloat)addOriginX addOriginY:(CGFloat)addOriginY;
+-(void)xb_updateOriginAddOriginX:(CGFloat)addOriginX addOriginY:(CGFloat)addOriginY
 {
     CGRect tempRect=self.frame;
     
@@ -1174,6 +1174,22 @@
     tempRect.origin.y+=addOriginY;
     
     self.frame=tempRect;
+}
+
+/**
+ 调整frame.size
+ addOriginX:原来x上添加的量
+ addOriginY:原来Y上添加的量
+ */
+-(void)xb_updateSizeAddWidth:(CGFloat)addWidth addHeight:(CGFloat)addHeight
+{
+    CGRect tempRcet=self.frame;
+    
+    tempRcet.size.width+=addWidth;
+    
+    tempRcet.size.height+=addHeight;
+    
+    self.frame=tempRcet;
 }
 
 

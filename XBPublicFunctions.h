@@ -115,6 +115,13 @@ typedef void (^asyncDownloadImgFailureBlock) (NSError *_Nullable error);
 
 
 /**
+ *  时间戳转换成时间字符串
+ *  参数1:时间戳
+ *  参数2:时区
+ */
++ (NSString *)dateStrFromTimeStampStr:(NSString *)timeStampStr timeZone:(NSString *)strTimeZone;
+
+/**
  * NSDate转换成字符串
  * 参数1:NSDate
  * 参数2:参数2:日期格式

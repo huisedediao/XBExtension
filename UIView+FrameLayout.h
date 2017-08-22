@@ -16,7 +16,7 @@
 /**
  根据传入的size和rect，算出这个size要处于rect的中央所需要的rect
  */
-+(CGRect)getRectOfSize:(CGSize)size sameCenterWithRect:(CGRect)rect;
++(CGRect)xb_getRectOfSize:(CGSize)size sameCenterWithRect:(CGRect)rect;
 
 
 
@@ -380,6 +380,13 @@
  addOriginY:原来Y上添加的量
  */
 -(void)xb_updateOriginAddOriginX:(CGFloat)addOriginX addOriginY:(CGFloat)addOriginY;
+
+/**
+ 调整frame.size
+ addOriginX:原来x上添加的量
+ addOriginY:原来Y上添加的量
+ */
+-(void)xb_updateSizeAddWidth:(CGFloat)addWidth addHeight:(CGFloat)addHeight;
 
 /**
  中心点不动,调整frame.size

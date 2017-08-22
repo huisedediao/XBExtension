@@ -204,7 +204,7 @@
 //}
 
 /**
- *  时间戳转换成时间
+ *  时间戳转换成时间字符串
  *  参数1:时间戳
  *  参数2:日期格式
  */
@@ -228,6 +228,21 @@
     NSString *currentDateStr = [dateFormatter stringFromDate: detaildate];
     
     return currentDateStr;
+}
+
+/**
+ *  时间戳转换成时间字符串
+ *  参数1:时间戳
+ *  参数2:时区
+ */
++ (NSString *)dateStrFromTimeStampStr:(NSString *)timeStampStr timeZone:(NSString *)strTimeZone
+{
+    NSDateFormatter * formatter = [[NSDateFormatter alloc ] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:[NSString stringWithFormat:@"GMT+%@", strTimeZone]]];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[timeStampStr integerValue]];
+    NSString *strDate = [formatter stringFromDate:date];
+    return strDate;
 }
 
 /**

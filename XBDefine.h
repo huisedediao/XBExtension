@@ -112,8 +112,34 @@ typedef enum
 #define FontT(s)             [UIFont systemFontOfSize:s weight:UIFontWeightThin]
 #define Font(s)              FontL(s)
 
-
-
+//当前语言
+#define CUR_LANG        ([[NSLocale preferredLanguages] objectAtIndex:0])
+//当前语言的缩写
+#define CUR_LANG_sub    [CUR_LANG substringToIndex:2]
+/*
+ // 英文：        en
+ // 中文：        zh
+ // 捷克文：       cs
+ // 阿拉伯文：      ar
+ // 丹麦文：       da
+ // 德文：        de
+ // 希腊文：       el
+ // 西班牙：       es
+ // 芬兰文：       fi
+ // 法文：        fr
+ // 匈牙利文：      hu
+ // 意大利文：      it
+ // 日文：        ja
+ // 挪威：        nb
+ // 荷兰：        nl
+ // 波兰文：       pl
+ // 葡萄牙文：      pt
+ // 俄文：        ru
+ // 瑞典：        sv
+ // 泰语：        th
+ // 土耳其文：      tr
+ // 越南语         vi
+ // */
 
 //状态栏高度
 #define StatusBarHeight    [[UIApplication sharedApplication] statusBarFrame].size.height

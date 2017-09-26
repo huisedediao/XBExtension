@@ -175,6 +175,9 @@ typedef enum
 //本地化相关
 #define STR(x) NSLocalizedString(x,nil)
 
+//1像素线宽
+#define SINGLE_LINE_WIDTH           (1 / [UIScreen mainScreen].scale)
+
 //角度转成弧度
 #define Angle2Radian(angle) ((angle) / 180.0 * M_PI)
 //由弧度转换角度

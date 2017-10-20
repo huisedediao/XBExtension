@@ -43,7 +43,7 @@
 {
     NSCalendar *gregorian = [[NSCalendar alloc]
                              initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *components = [gregorian components:NSHourCalendarUnit fromDate:self];
+    NSDateComponents *components = [gregorian components:NSMinuteCalendarUnit fromDate:self];
     return (int)[components minute];
 }
 

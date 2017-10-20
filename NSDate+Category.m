@@ -1,3 +1,4 @@
+
 //
 //  NSDate+Category.m
 //  Calendar
@@ -36,6 +37,14 @@
                              initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *components = [gregorian components:NSHourCalendarUnit fromDate:self];
     return (int)[components hour];
+}
+
+- (int)min
+{
+    NSCalendar *gregorian = [[NSCalendar alloc]
+                             initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *components = [gregorian components:NSHourCalendarUnit fromDate:self];
+    return (int)[components minute];
 }
 
 - (NSDate *)offsetDay:(int)numDays
@@ -150,6 +159,7 @@
     }
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:format];
+    [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT+0"]];
     NSString *dateString = [dateFormatter stringFromDate:date];
     return dateString;
 }

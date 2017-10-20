@@ -13,6 +13,7 @@
 - (int)month;
 - (int)day;
 - (int)hour;
+- (int)min;
 - (NSString *)weekString;
 - (NSDate *)offsetDay:(int)numDays;
 - (BOOL)isToday;

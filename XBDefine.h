@@ -96,8 +96,11 @@ typedef enum
 #define FileManager  [NSFileManager defaultManager]
 
 //屏幕宽高
-#define ScreenWidth [UIScreen mainScreen].bounds.size.width
-#define ScreenHeight [UIScreen mainScreen].bounds.size.height
+#define kScreenWidth [UIScreen mainScreen].bounds.size.width
+#define kScreenHeight [UIScreen mainScreen].bounds.size.height
+
+#define GHeightFactor (kScreenHeight/568.0)
+#define GWidthFactor (kScreenWidth/320.0)
 
 //随机色
 #define RandColor [UIColor colorWithRed:arc4random()%256/255.0 green:arc4random()%256/255.0 blue:arc4random()%256/255.0 alpha:1.0]
@@ -147,6 +150,11 @@ typedef enum
 #define NavigationBarHeight    self.navigationController.navigationBar.frame.size.height
 //顶部状态栏+导航栏
 #define TopBarHeight StatusBarHeight + NavigationBarHeight
+
+//顶部安全区域高
+#define SafeAreaTopHeight (kWJScreenHeight == 812.0 ? 88 : 64)
+//底部安全区域高
+#define SafeAreaBottomHeight (kWJScreenHeight == 812.0 ? 34 : 0)
 
 //系统版本
 #define SystemVersion [[UIDevice currentDevice].systemVersion doubleValue]

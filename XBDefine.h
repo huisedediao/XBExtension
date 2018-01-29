@@ -115,6 +115,8 @@ typedef enum
 #define FontT(s)             [UIFont systemFontOfSize:s weight:UIFontWeightThin]
 #define Font(s)              FontL(s)
 
+#define UIImageName(imageName) [UIImage imageNamed:imageName]
+
 //当前语言
 #define CUR_LANG        ([[NSLocale preferredLanguages] objectAtIndex:0])
 //当前语言的缩写
@@ -151,15 +153,20 @@ typedef enum
 //顶部状态栏+导航栏
 #define TopBarHeight StatusBarHeight + NavigationBarHeight
 
+#define TabbarHeight self.tabBarController.tabBar.frame.size.height;
+
 //顶部安全区域高
-#define SafeAreaTopHeight (kWJScreenHeight == 812.0 ? 88 : 64)
+#define SafeAreaTopHeight (kScreenHeight == 812.0 ? 88 : 64)
 //底部安全区域高
-#define SafeAreaBottomHeight (kWJScreenHeight == 812.0 ? 34 : 0)
+#define SafeAreaBottomHeight (kScreenHeight == 812.0 ? 34 : 0)
 
 //系统版本
 #define SystemVersion [[UIDevice currentDevice].systemVersion doubleValue]
 //系统版本是否大于IOS7
-#define IOS7 SystemVersion >= 7.0
+#define IOS7    SystemVersion >= 7.0
+#define IOS8    SystemVersion >= 8.0
+#define IOS9    SystemVersion >= 9.0
+#define IOS10   SystemVersion >= 10.0
 
 //APP版本号
 #define AppVersion [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]
@@ -295,14 +302,14 @@ a;})
 UIWindow* win = nil; \
 for (id item in [UIApplication sharedApplication].windows) \
 {\
-    if ([item class] == [UIWindow class]) \
+if ([item class] == [UIWindow class]) \
 {\
-        if (!((UIWindow*)item).hidden)\
-        {\
-            win = item;\
-            break;\
-        }\
-    }\
+if (!((UIWindow*)item).hidden)\
+{\
+win = item;\
+break;\
+}\
+}\
 }\
 win;\
 })
@@ -326,3 +333,4 @@ isSubView;\
 /**********************************常用方法**********************************/
 
 #endif /* XBDefine_h */
+

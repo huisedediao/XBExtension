@@ -153,7 +153,7 @@ typedef enum
 //顶部状态栏+导航栏
 #define TopBarHeight StatusBarHeight + NavigationBarHeight
 
-#define TabbarHeight self.tabBarController.tabBar.frame.size.height;
+#define TabbarHeight self.tabBarController.tabBar.frame.size.height
 
 //顶部安全区域高
 #define SafeAreaTopHeight (kScreenHeight == 812.0 ? 88 : 64)

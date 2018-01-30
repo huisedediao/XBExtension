@@ -99,8 +99,14 @@ typedef enum
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
 
-#define GHeightFactor (kScreenHeight/568.0)
-#define GWidthFactor (kScreenWidth/320.0)
+#define kConsultHeight 568.0
+#define kConsultWidth 320.0
+
+#define GHeightFactor (kScreenHeight == 812.0 ? 667/kConsultHeight: kScreenHeight/kConsultHeight)
+#define GWidthFactor (kScreenWidth/kConsultWidth)
+
+#define GWidthFactorFun(x) (x * GWidthFactor)
+#define GHeightFactorFun(x) (x * GHeightFactor)
 
 //随机色
 #define RandColor [UIColor colorWithRed:arc4random()%256/255.0 green:arc4random()%256/255.0 blue:arc4random()%256/255.0 alpha:1.0]
@@ -333,4 +339,3 @@ isSubView;\
 /**********************************常用方法**********************************/
 
 #endif /* XBDefine_h */
-

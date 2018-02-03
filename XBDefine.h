@@ -102,6 +102,11 @@ typedef enum
 #define kConsultHeight 568.0
 #define kConsultWidth 320.0
 
+#define isIphone5Screen (kScreenHeight == 568.0 ? YES : NO)
+#define isIphone6Screen (kScreenHeight == 667.0 ? YES : NO)
+#define isIphone6PScreen (kScreenHeight == 736.0 ? YES : NO)
+#define isIphoneXScreen (kScreenHeight == 812.0 ? YES : NO)
+
 #define GHeightFactor (kScreenHeight == 812.0 ? 667/kConsultHeight: kScreenHeight/kConsultHeight)
 #define GWidthFactor (kScreenWidth/kConsultWidth)
 
@@ -120,6 +125,10 @@ typedef enum
 #define FontB(s)             [UIFont systemFontOfSize:s weight:UIFontWeightBold]
 #define FontT(s)             [UIFont systemFontOfSize:s weight:UIFontWeightThin]
 #define Font(s)              FontL(s)
+#define UIFont(s)            [UIFont systemFontOfSize:s]
+#define UIFontBold(s)        [UIFont boldSystemFontOfSize:s]
+
+#define Font_PingFang(s)        [UIFont systemFontOfSize:s weight:UIFontWeightLight]
 
 #define UIImageName(imageName) [UIImage imageNamed:imageName]
 

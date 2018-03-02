@@ -47,7 +47,7 @@ typedef enum
 /****不打印当前所在方法****/
 #ifdef DEBUG //处于调试阶段,打印
 //#define NSLog(...) NSLog(__VA_ARGS__)
-#define NSLog(format,...) printf("%s",[[NSString stringWithFormat:(format), ##__VA_ARGS__] UTF8String])//解决nslog有时候打印不全的问题
+#define NSLog(format,...) printf("打印输出：\r%s\r\r",[[NSString stringWithFormat:(format), ##__VA_ARGS__] UTF8String])//解决nslog有时候打印不全的问题
 #else   //发布阶段,不打印
 #define NSLog(...)
 #endif
@@ -349,3 +349,5 @@ isSubView;\
 /**********************************常用方法**********************************/
 
 #endif /* XBDefine_h */
+
+

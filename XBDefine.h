@@ -47,7 +47,7 @@ typedef enum
 /****不打印当前所在方法****/
 #ifdef DEBUG //处于调试阶段,打印
 //#define NSLog(...) NSLog(__VA_ARGS__)
-#define NSLog(format,...) printf("%s",[[NSString stringWithFormat:(format), ##__VA_ARGS__] UTF8String])//解决nslog有时候打印不全的问题
+#define NSLog(format,...) printf("打印输出：\r%s\r\r",[[NSString stringWithFormat:(format), ##__VA_ARGS__] UTF8String])//解决nslog有时候打印不全的问题
 #else   //发布阶段,不打印
 #define NSLog(...)
 #endif
@@ -103,13 +103,31 @@ typedef enum
 #define kConsultHeight 568.0
 #define kConsultWidth 320.0
 
-#define isIphone5Screen (kScreenHeight == 568.0 ? YES : NO)
-#define isIphone6Screen (kScreenHeight == 667.0 ? YES : NO)
-#define isIphone6PScreen (kScreenHeight == 736.0 ? YES : NO)
-#define isIphoneXScreen (kScreenHeight == 812.0 ? YES : NO)
+#define isIpadScreen (((kScreenHeight == 480) || (kScreenWidth == 480)) ? YES : NO)
+#define isIphone5Screen (((kScreenHeight == 568.0) || (kScreenWidth == 568.0)) ? YES : NO)
+#define isIphone6Screen (((kScreenHeight == 667.0) || (kScreenWidth == 667.0)) ? YES : NO)
+#define isIphone6PScreen (((kScreenHeight == 736.0) || (kScreenWidth == 736.0)) ? YES : NO)
+#define isIphoneXScreen (((kScreenHeight == 812.0) || (kScreenWidth == 812.0)) ? YES : NO)
 
-#define GHeightFactor (kScreenHeight == 812.0 ? 667/kConsultHeight: kScreenHeight/kConsultHeight)
+
 #define GWidthFactor (kScreenWidth/kConsultWidth)
+#define GHeightFactor \
+({\
+CGFloat result = kConsultHeight;\
+if (isIphoneXScreen)\
+{\
+result = 667/kConsultHeight;\
+}\
+else if (isIpadScreen)\
+{\
+result = 568/kConsultHeight;\
+}\
+else\
+{\
+result = kScreenHeight/kConsultHeight;\
+}\
+result;\
+})
 
 #define GWidthFactorFun(x) (x * GWidthFactor)
 #define GHeightFactorFun(x) (x * GHeightFactor)
@@ -349,3 +367,5 @@ isSubView;\
 /**********************************常用方法**********************************/
 
 #endif /* XBDefine_h */
+
+

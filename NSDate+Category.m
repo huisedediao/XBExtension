@@ -86,6 +86,12 @@
     return [gregorian dateFromComponents:components];
 }
 
+- (NSInteger)weekIndex {
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *dateComponents = [calendar components:kCFCalendarUnitWeekday fromDate:self];
+    return dateComponents.weekday;
+}
+
 - (NSString *)weekString {
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *dateComponents = [calendar components:kCFCalendarUnitWeekday fromDate:self];
@@ -160,6 +166,24 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:format];
     [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT+0"]];
+    NSString *dateString = [dateFormatter stringFromDate:date];
+    return dateString;
+}
+
++ (NSString *)stringFromDate:(NSDate *)date format:(NSString *)format timeZone:(NSTimeZone *)timeZone
+{
+    if (!format)
+        format = @"yyyy-MM-dd";
+    if (date==nil) {
+        return @"";
+    }
+    if (timeZone == nil)
+    {
+        timeZone = [NSTimeZone timeZoneWithName:@"GMT+8"];
+    }
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:format];
+    [dateFormatter setTimeZone:timeZone];
     NSString *dateString = [dateFormatter stringFromDate:date];
     return dateString;
 }

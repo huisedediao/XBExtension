@@ -14,6 +14,7 @@
 - (int)day;
 - (int)hour;
 - (int)min;
+- (NSInteger)weekIndex;
 - (NSString *)weekString;
 - (NSDate *)offsetDay:(int)numDays;
 - (BOOL)isToday;
@@ -23,6 +24,7 @@
 + (int)dayBetweenStartDate:(NSDate *)startDate endDate:(NSDate *)endDate;
 + (NSDate *)dateFromString:(NSString *)dateString format:(NSString *)format;
 + (NSString *)stringFromDate:(NSDate *)date format:(NSString *)format;
++ (NSString *)stringFromDate:(NSDate *)date format:(NSString *)format timeZone:(NSTimeZone *)timeZone;
 + (NSDate *)dateFromString:(NSString *)dateString;
 + (NSDate *)dateFromStringBySpecifyTime:(NSString *)dateString hour:(NSInteger)hour minute:(NSInteger)minute second:(NSInteger)second;
 + (NSDateComponents *)nowDateComponents;

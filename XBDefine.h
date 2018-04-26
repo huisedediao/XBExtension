@@ -190,7 +190,7 @@ result;\
 #define TabbarHeight self.tabBarController.tabBar.frame.size.height
 
 //顶部安全区域高
-#define SafeAreaTopHeight (kScreenHeight == 812.0 ? 88 : 64)
+#define SafeAreaTopHeight (kScreenHeight == 812.0 ? 24 : 0)
 //底部安全区域高
 #define SafeAreaBottomHeight (kScreenHeight == 812.0 ? 34 : 0)
 
@@ -253,6 +253,7 @@ result;\
 
 //block weak属性化self宏
 #define WEAK_SELF __typeof(self) __weak weakSelf = self;
+#define STRONG_SELF typeof(weakSelf) __strong strongSelf = weakSelf;
 
 #define StrongSelf(type)  __strong typeof(type) type = weak##type; // strong
 
@@ -367,5 +368,4 @@ isSubView;\
 /**********************************常用方法**********************************/
 
 #endif /* XBDefine_h */
-
 

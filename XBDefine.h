@@ -122,7 +122,7 @@ typedef enum
 #define isIphoneXScreen (ScreenCondition(812.0) ? YES : NO)
 #define isIphoneXROrXSMAXScreen (ScreenCondition(896.0) ? YES : NO)
 
-#define GWidthFactor (kScreenWidth/kConsultWidth)
+#define GWidthFactor (MIN(kScreenWidth, kScreenHeight)/kConsultWidth)
 #define GHeightFactor \
 ({\
 CGFloat result = kConsultHeight;\
@@ -140,7 +140,7 @@ result = 568/kConsultHeight;\
 }\
 else\
 {\
-result = kScreenHeight/kConsultHeight;\
+result = MAX(kScreenWidth, kScreenHeight)/kConsultHeight;\
 }\
 result;\
 })

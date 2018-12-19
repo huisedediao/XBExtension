@@ -97,7 +97,7 @@ typedef enum
 #define FileManager  [NSFileManager defaultManager]
 
 //状态栏高度
-#define KStatusBarHeight    [[UIApplication sharedApplication] statusBarFrame].size.height
+#define KStatusBarHeight    (KSafeAreaTopHeight + 20)
 //导航栏高度
 #define KNavigationBarHeight    (KStatusBarHeight + 44)
 //顶部状态栏+导航栏

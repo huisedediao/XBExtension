@@ -372,6 +372,52 @@ break;\
 isSubView;\
 })
 
+
+///单例
+#define kSingletonH \
++ (instancetype)shared;
+
+#define kSingletonM \
++ (instancetype)shared \
+{ \
+return [self new]; \
+} \
++ (instancetype)allocWithZone:(struct _NSZone *)zone \
+{ \
+static id tool = nil; \
+static dispatch_once_t onceToken; \
+dispatch_once(&onceToken, ^{ \
+tool = [super allocWithZone:zone]; \
+}); \
+return tool; \
+} \
+//- (instancetype)init \
+//{ \
+//    if (self = [super init]) \
+//    { \
+//        static dispatch_once_t onceToken; \
+//        dispatch_once(&onceToken, ^{ \
+//             \
+//        }); \
+//    } \
+//    return self; \
+//}
+
+
+///uitableViewCell 的分割线从0开始
+#define tableViewCellSeparatorFromZero \
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath\
+{\
+if ([cell respondsToSelector:@selector(setSeparatorInset:)])\
+{\
+[cell setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 0)];\
+}\
+if ([cell respondsToSelector:@selector(setLayoutMargins:)])\
+{\
+[cell setLayoutMargins:UIEdgeInsetsMake(0, 0, 0, 0)];\
+}\
+}
+
 /**********************************常用方法**********************************/
 
 #endif /* XBDefine_h */

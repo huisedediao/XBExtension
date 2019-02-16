@@ -403,6 +403,46 @@ return tool; \
 //    return self; \
 //}
 
+///归档和解归档
+#define kEncodeAndDecoderProtocol \
+- (void)encodeWithCoder:(NSCoder *)encoder{ \
+unsigned int count = 0; \
+objc_property_t *properties =     class_copyPropertyList([self class], &count); \
+for (int i =0; i < count; i ++) { \
+objc_property_t property = properties[i]; \
+const char *name = property_getName(property); \
+NSString *key = [NSString   stringWithUTF8String:name]; \
+[encoder encodeObject:[self valueForKeyPath:key] forKey:key]; \
+}} \
+\
+- (instancetype)initWithCoder:(NSCoder *)decoder{ \
+unsigned int count = 0; \
+objc_property_t *properties = class_copyPropertyList([self class], &count); \
+for (int i =0; i < count; i ++) { \
+objc_property_t property = properties[i]; \
+const char *name = property_getName(property); \
+NSString *key = [NSString stringWithUTF8String:name]; \
+[self setValue:[decoder decodeObjectForKey:key] forKeyPath:key]; \
+} \
+return self; \
+}
+
+///coping协议
+#define kCopingProtocol \
+- (id)copyWithZone:(NSZone *)zone \
+{ \
+id copyObject = [[[self class] allocWithZone:zone] init]; \
+unsigned int count = 0; \
+objc_property_t *properties = class_copyPropertyList([self class], &count); \
+for (int i =0; i < count; i ++) { \
+objc_property_t property = properties[i]; \
+const char *name = property_getName(property); \
+NSString *key = [NSString stringWithUTF8String:name]; \
+[copyObject setValue:[self valueForKey:key] forKeyPath:key]; \
+} \
+return copyObject; \
+}
+
 
 ///uitableViewCell 的分割线从0开始
 #define tableViewCellSeparatorFromZero \

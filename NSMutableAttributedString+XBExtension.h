@@ -200,4 +200,18 @@
  参数2：范围
  */
 //- (void)xb_setVerticalDirection:(int)direction range:(NSRange)range;
+
+/**
+ 添加超链接
+ 参数1：超链接urlStr
+ 参数2：范围
+ */
+- (void)xb_setLinkUrlStr:(NSString *)urlStr range:(NSRange)range;
+/**
+ 添加超链接
+ 参数1：超链接urlStr
+ 参数2：超链接文字颜色
+ 参数3：范围
+ */
+- (void)xb_setLinkUrlStr:(NSString *)urlStr linkStrcolor:(UIColor *)linkStrcolor range:(NSRange)range;
 @end

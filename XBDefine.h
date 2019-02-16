@@ -96,23 +96,61 @@ typedef enum
 //FileManager
 #define FileManager  [NSFileManager defaultManager]
 
-//屏幕宽高
-#define kScreenWidth [UIScreen mainScreen].bounds.size.width
-#define kScreenHeight [UIScreen mainScreen].bounds.size.height
+//状态栏高度
+#define KStatusBarHeight    (KSafeAreaTopHeight + 20)
+//导航栏高度
+#define KNavigationBarHeight    (KStatusBarHeight + 44)
+//顶部状态栏+导航栏
+#define KTopBarHeight KStatusBarHeight + KNavigationBarHeight
+
+#define KTabbarHeight self.tabBarController.tabBar.frame.size.height
+
+//顶部安全区域高
+#define KSafeAreaTopHeight ((isIphoneXScreen || isIphoneXROrXSMAXScreen) ? 24 : 0)
+//底部安全区域高
+#define KSafeAreaBottomHeight ((isIphoneXScreen || isIphoneXROrXSMAXScreen) ? 34 : 0)
 
 #define kConsultHeight 568.0
 #define kConsultWidth 320.0
 
-#define isIphone5Screen (kScreenHeight == 568.0 ? YES : NO)
-#define isIphone6Screen (kScreenHeight == 667.0 ? YES : NO)
-#define isIphone6PScreen (kScreenHeight == 736.0 ? YES : NO)
-#define isIphoneXScreen (kScreenHeight == 812.0 ? YES : NO)
+#define ScreenCondition(x) ((kScreenHeight == x) || (kScreenWidth == x))
 
-#define GHeightFactor (kScreenHeight == 812.0 ? 667/kConsultHeight: kScreenHeight/kConsultHeight)
-#define GWidthFactor (kScreenWidth/kConsultWidth)
+#define isIpadScreen (ScreenCondition(480.0) ? YES : NO)
+#define isIphone5Screen (ScreenCondition(568.0) ? YES : NO)
+#define isIphone6Screen (ScreenCondition(667.0) ? YES : NO)
+#define isIphone6PScreen (ScreenCondition(736.0) ? YES : NO)
+#define isIphoneXScreen (ScreenCondition(812.0) ? YES : NO)
+#define isIphoneXROrXSMAXScreen (ScreenCondition(896.0) ? YES : NO)
+
+#define GWidthFactor (MIN(kScreenWidth, kScreenHeight)/kConsultWidth)
+#define GHeightFactor \
+({\
+CGFloat result = kConsultHeight;\
+if (isIphoneXScreen)\
+{\
+result = 667/kConsultHeight;\
+}\
+else if (isIphoneXROrXSMAXScreen)\
+{\
+result = 736/kConsultHeight;\
+}\
+else if (isIpadScreen)\
+{\
+result = 568/kConsultHeight;\
+}\
+else\
+{\
+result = MAX(kScreenWidth, kScreenHeight)/kConsultHeight;\
+}\
+result;\
+})
 
 #define GWidthFactorFun(x) (x * GWidthFactor)
 #define GHeightFactorFun(x) (x * GHeightFactor)
+
+//屏幕宽高
+#define kScreenWidth [UIScreen mainScreen].bounds.size.width
+#define kScreenHeight [UIScreen mainScreen].bounds.size.height
 
 //随机色
 #define RandColor [UIColor colorWithRed:arc4random()%256/255.0 green:arc4random()%256/255.0 blue:arc4random()%256/255.0 alpha:1.0]
@@ -162,19 +200,6 @@ typedef enum
  // 越南语         vi
  // */
 
-//状态栏高度
-#define StatusBarHeight    [[UIApplication sharedApplication] statusBarFrame].size.height
-//导航栏高度
-#define NavigationBarHeight    self.navigationController.navigationBar.frame.size.height
-//顶部状态栏+导航栏
-#define TopBarHeight StatusBarHeight + NavigationBarHeight
-
-#define TabbarHeight self.tabBarController.tabBar.frame.size.height
-
-//顶部安全区域高
-#define SafeAreaTopHeight (kScreenHeight == 812.0 ? 88 : 64)
-//底部安全区域高
-#define SafeAreaBottomHeight (kScreenHeight == 812.0 ? 34 : 0)
 
 //系统版本
 #define SystemVersion [[UIDevice currentDevice].systemVersion doubleValue]
@@ -235,6 +260,7 @@ typedef enum
 
 //block weak属性化self宏
 #define WEAK_SELF __typeof(self) __weak weakSelf = self;
+#define STRONG_SELF typeof(weakSelf) __strong strongSelf = weakSelf;
 
 #define StrongSelf(type)  __strong typeof(type) type = weak##type; // strong
 
@@ -346,8 +372,53 @@ break;\
 isSubView;\
 })
 
+
+///单例
+#define kSingletonH \
++ (instancetype)shared;
+
+#define kSingletonM \
++ (instancetype)shared \
+{ \
+return [self new]; \
+} \
++ (instancetype)allocWithZone:(struct _NSZone *)zone \
+{ \
+static id tool = nil; \
+static dispatch_once_t onceToken; \
+dispatch_once(&onceToken, ^{ \
+tool = [super allocWithZone:zone]; \
+}); \
+return tool; \
+} \
+//- (instancetype)init \
+//{ \
+//    if (self = [super init]) \
+//    { \
+//        static dispatch_once_t onceToken; \
+//        dispatch_once(&onceToken, ^{ \
+//             \
+//        }); \
+//    } \
+//    return self; \
+//}
+
+
+///uitableViewCell 的分割线从0开始
+#define tableViewCellSeparatorFromZero \
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath\
+{\
+if ([cell respondsToSelector:@selector(setSeparatorInset:)])\
+{\
+[cell setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 0)];\
+}\
+if ([cell respondsToSelector:@selector(setLayoutMargins:)])\
+{\
+[cell setLayoutMargins:UIEdgeInsetsMake(0, 0, 0, 0)];\
+}\
+}
+
 /**********************************常用方法**********************************/
 
 #endif /* XBDefine_h */
-
 

@@ -86,6 +86,58 @@
     return [gregorian dateFromComponents:components];
 }
 
+- (NSInteger)weekIndex {
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *dateComponents = [calendar components:kCFCalendarUnitWeekday fromDate:self];
+    return dateComponents.weekday;
+}
+
+- (NSString *)weekString_ax {
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *dateComponents = [calendar components:kCFCalendarUnitWeekday fromDate:self];
+    switch (dateComponents.weekday) {
+        case 1: {
+            return XBText_周日;
+        }
+            break;
+            
+        case 2: {
+            return XBText_周一;
+        }
+            break;
+            
+        case 3: {
+            return XBText_周二;
+        }
+            break;
+            
+        case 4: {
+            return XBText_周三;
+        }
+            break;
+            
+        case 5: {
+            return XBText_周四;
+        }
+            break;
+            
+        case 6: {
+            return XBText_周五;
+        }
+            break;
+            
+        case 7: {
+            return XBText_周六;
+        }
+            break;
+            
+        default:
+            break;
+    }
+    
+    return @"";
+}
+
 - (NSString *)weekString {
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *dateComponents = [calendar components:kCFCalendarUnitWeekday fromDate:self];
@@ -151,6 +203,22 @@
     return date;
 }
 
++ (NSDate *)dateFromString:(NSString *)dateString format:(NSString *)format timeZone:(NSTimeZone *)timeZone
+{
+    if (!format)
+        format = @"yyyy-MM-dd";
+    
+    if (timeZone == nil)
+    {
+        timeZone = [NSTimeZone timeZoneWithName:@"GMT+8"];
+    }
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:format];
+    [dateFormatter setTimeZone:timeZone];
+    NSDate *date = [dateFormatter dateFromString:dateString];
+    return date;
+}
+
 + (NSString *)stringFromDate:(NSDate *)date format:(NSString *)format {
     if (!format)
         format = @"yyyy-MM-dd";
@@ -160,6 +228,24 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:format];
     [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT+0"]];
+    NSString *dateString = [dateFormatter stringFromDate:date];
+    return dateString;
+}
+
++ (NSString *)stringFromDate:(NSDate *)date format:(NSString *)format timeZone:(NSTimeZone *)timeZone
+{
+    if (!format)
+        format = @"yyyy-MM-dd";
+    if (date==nil) {
+        return @"";
+    }
+    if (timeZone == nil)
+    {
+        timeZone = [NSTimeZone timeZoneWithName:@"GMT+8"];
+    }
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:format];
+    [dateFormatter setTimeZone:timeZone];
     NSString *dateString = [dateFormatter stringFromDate:date];
     return dateString;
 }
@@ -206,3 +292,4 @@
 }
 
 @end
+

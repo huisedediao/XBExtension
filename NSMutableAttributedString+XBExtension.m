@@ -330,6 +330,27 @@ label.frame.size.width;\
 //    [self addAttribute:NSVerticalGlyphFormAttributeName value:@(direction) range:[self handleRange:range]];
 //}
 
-
+/**
+ 添加超链接
+ 参数1：超链接urlStr
+ 参数2：范围
+ */
+- (void)xb_setLinkUrlStr:(NSString *)urlStr range:(NSRange)range
+{
+    [self addAttribute:NSLinkAttributeName value:[urlStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]] range:range];
+}
+/**
+ 添加超链接
+ 参数1：超链接urlStr
+ 参数2：超链接文字颜色
+ 参数3：范围
+ */
+- (void)xb_setLinkUrlStr:(NSString *)urlStr linkStrcolor:(UIColor *)linkStrcolor range:(NSRange)range
+{
+    [self xb_setUnderlineStyle:NSUnderlineStyleSingle range:range];
+//    [self xb_setUnderlineColor:linkStrcolor range:range];
+    [self xb_setColor:linkStrcolor range:range];
+    [self xb_setLinkUrlStr:urlStr range:range];
+}
 
 @end

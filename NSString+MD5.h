@@ -11,12 +11,13 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NSString (MD5)
-// 32位 (较为常用)
-- (NSString *)md5HashToLower32Bit;
+/** 32位小写 */
+- (NSString *)md5HashToLower32Bit
+/** 32位大写 */
 - (NSString *)md5HashToUpper32Bit;
-
-// 16位
+/** 16位小写 */
 - (NSString *)md5HashToLower16Bit;
+/** 16位大写 */
 - (NSString *)md5HashToUpper16Bit;
 @end
 

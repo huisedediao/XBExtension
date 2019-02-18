@@ -404,7 +404,7 @@ return tool; \
 //}
 
 ///归档和解归档
-#define kEncodeAndDecoderProtocol \
+#define kCodingProtocol \
 - (void)encodeWithCoder:(NSCoder *)encoder{ \
 unsigned int count = 0; \
 objc_property_t *properties =     class_copyPropertyList([self class], &count); \

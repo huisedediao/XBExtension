@@ -245,7 +245,7 @@ static char firstLetterArray[HANZI_COUNT] =
     return [result uppercaseString];
 }
 
-/** 马云：返回mayun */
+/** 马云：返回ma yun */
 - (NSString *)getPinyinStr
 {
     NSMutableString *mutableString = [NSMutableString stringWithString:self];

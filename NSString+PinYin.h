@@ -18,7 +18,7 @@
  */
 - (NSString *)getFirstLetter;
 
-/** 马云：返回mayun */
+/** 马云：返回ma yun */
 - (NSString *)getPinyinStr;
 
 @end
